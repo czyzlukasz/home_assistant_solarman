@@ -16,6 +16,7 @@ CONF_INVERTER_HOST = 'inverter_host'
 CONF_INVERTER_PORT = 'inverter_port'
 CONF_INVERTER_SERIAL = 'inverter_serial'
 CONF_INVERTER_MB_SLAVEID = 'inverter_mb_slaveid'
+CONF_USE_MODBUS_TCP = 'use_modbus_tcp'
 CONF_LOOKUP_FILE = 'lookup_file'
 
 SENSOR_PREFIX = 'Solarman'
