@@ -32,13 +32,17 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     inverter_host = config.get(CONF_INVERTER_HOST)
     if inverter_host == "0.0.0.0":
         inverter_host = _inverter_scanner.get_ipaddress()
-        
-   
+
+
     inverter_port = config.get(CONF_INVERTER_PORT)
+    modbus_tcp = config.get(CONF_USE_MODBUS_TCP)
+    if modbus_tcp is None:
+        modbus_tcp = False
+
     inverter_sn = config.get(CONF_INVERTER_SERIAL)
     if inverter_sn == 0:
         inverter_sn = _inverter_scanner.get_serialno()
-    
+
     inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
     if not inverter_mb_slaveid:
         inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
@@ -51,7 +55,7 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     if inverter_sn is None:
         raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
 
-    inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_mb_slaveid, lookup_file)
+    inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_mb_slaveid, modbus_tcp, lookup_file)
     #  Prepare the sensor entities.
     hass_sensors = []
     for sensor in inverter.get_sensors():
